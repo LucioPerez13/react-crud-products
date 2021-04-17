@@ -9,7 +9,7 @@ export const ModalCreate = ({
     insertar,
     productoSeleccionado,
 }) => {
-    console.log(productoSeleccionado);
+
     return (
         <Modal isOpen={modalInsertar}>
             <ModalHeader>

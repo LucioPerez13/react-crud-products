@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-notifications/lib/notifications.css";
 //import { useForm } from "react-hook-form";
 import { ModalCreate } from "./components/ModalCreate";
 import { ModalUpdate } from "./components/ModalUpdate";
 import { ModalDelete } from "./components/ModalDelete";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 const CrudProducts = () => {
     const dataProductos = [
@@ -39,7 +41,11 @@ const CrudProducts = () => {
     });
 
     const openModalInsertar = () => {
-        setProductoSeleccionado(productoSeleccionado);
+        setProductoSeleccionado({
+            id: "",
+            nombre: "",
+            precio: "",
+        });
         setModalInsertar(true);
     };
 
@@ -64,6 +70,7 @@ const CrudProducts = () => {
         dataNueva.push(valorInsertar);
         setData(dataNueva);
         setModalInsertar(false);
+        NotificationManager.success("Se guardo exitosamente");
     };
 
     const editar = () => {
@@ -76,51 +83,64 @@ const CrudProducts = () => {
         });
         setData(dataNueva);
         setModalEditar(false);
+        NotificationManager.success("Se actualizó exitosamente");
     };
 
     const eliminar = () => {
         setData(data.filter((prod) => prod.id !== productoSeleccionado.id));
         setModalEliminar(false);
+        NotificationManager.success("Se elimino exitosamente");
     };
 
     return (
-        <div className="card col-12">
-            <h2>Productos</h2>
-            <br />
-            <button className="btn btn-success" onClick={() => openModalInsertar()}>
-                Agregar
-            </button>
-            <br />
-            <table className="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Precio</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data.map((elemento, i) => (
-                        <tr key={i}>
-                            <td>{elemento.id}</td>
-                            <td>{elemento.nombre}</td>
-                            <td>{elemento.precio}</td>
-                            <td>
-                                <button
-                                    className="btn btn-primary mr-2"
-                                    onClick={() => seleccionarProducto(elemento, "U")}
-                                >
-                                    Editar
-                                </button>
-                                <button className="btn btn-danger" onClick={() => seleccionarProducto(elemento, "D")}>
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <div className="m-5">
+            <div className="card col-10 container">
+                <div className="card-body">
+                    <div className="text-center">
+                        <h2> Crud productos</h2>
+                        <br />
+                        <button className="btn btn-outline-success" onClick={() => openModalInsertar()}>
+                            Agregar
+                        </button>
+                    </div>
+                    <br />
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th className="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {data.map((elemento, i) => (
+                                <tr key={i}>
+                                    <td>{elemento.id}</td>
+                                    <td>{elemento.nombre}</td>
+                                    <td>{elemento.precio}</td>
+                                    <td className="text-center">
+                                        <button
+                                            className="btn btn-outline-primary mr-2"
+                                            onClick={() => seleccionarProducto(elemento, "U")}
+                                        >
+                                            Editar
+                                        </button>
+                                        <button
+                                            className="btn btn-outline-danger"
+                                            onClick={() => seleccionarProducto(elemento, "D")}
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <NotificationContainer />
 
             <ModalCreate
                 modalInsertar={modalInsertar}
