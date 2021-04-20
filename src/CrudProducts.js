@@ -3,9 +3,9 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-notifications/lib/notifications.css";
 //import { useForm } from "react-hook-form";
-import { ModalCreate } from "./components/ModalCreate";
-import { ModalUpdate } from "./components/ModalUpdate";
-import { ModalDelete } from "./components/ModalDelete";
+import ModalCreate from "./components/ModalCreate";
+import ModalUpdate from "./components/ModalUpdate";
+import ModalDelete from "./components/ModalDelete";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 
 const CrudProducts = () => {
